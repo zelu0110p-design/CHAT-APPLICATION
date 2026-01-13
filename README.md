@@ -16,26 +16,26 @@
 Chat application 
 
 
-1 Overview
+1. Overview
 
 The `index.js` file is the main server-side entry point of the Chat Application. It sets up an Express web server and integrates Socket.IO to enable real-time, bidirectional communication between clients. This file is responsible for handling user connections, room management, message broadcasting, and maintaining application state for connected users.
 
 
-2 Server Setup
+2. Server Setup
 
 The file begins by importing required modules such as `express`, `socket.io`, and Node.js utilities for path handling. Since the project uses ES modules, `fileURLToPath` is used to correctly derive the current directory path.
 
 An Express application is created and configured to serve static files from the `public` directory. This enables the browser to load client-side assets, including HTML, CSS, and JavaScript. The server listens on a configurable port (defaulting to `3500`) and logs a confirmation message once it starts successfully.
 
 
-3 Socket.IO Integration
+3. Socket.IO Integration
 
 A Socket.IO server is attached to the Express HTTP server to handle real-time communication. During development, CORS is configured to allow connections from local frontend servers, while production mode restricts external origins for security.
 
 When a client connects, the server logs the socket ID and immediately sends a welcome message from a virtual `Admin` user. This establishes an initial connection acknowledgment.
 
 
-4 Application State Management
+4. Application State Management
 
 User state is maintained using a simple in-memory object called `UsersState`. This object stores an array of active users, each represented by a unique socket ID, username, and room name. Helper functions are provided to:
 
@@ -48,7 +48,7 @@ User state is maintained using a simple in-memory object called `UsersState`. Th
 This centralized state allows the server to manage rooms and participants efficiently.
 
 
-5 Room Handling
+5. Room Handling
 
 When a user emits the `enterRoom` event, the server:
 
@@ -62,21 +62,22 @@ When a user emits the `enterRoom` event, the server:
 This ensures seamless room switching and accurate real-time updates.
 
 
-6 Messaging and Activity
+6. Messaging and Activity
 
 The server listens for `message` events and broadcasts messages only to users within the same room. Each message is formatted using the `buildMsg` function, which attaches a timestamp for display consistency.
 
 Typing indicators are handled through the `activity` event. When a user is typing, their name is broadcast to other users in the same room without storing any persistent state.
 
 
-7 Disconnection Handling
+7. Disconnection Handling
 
 When a socket disconnects, the server removes the user from the application state, notifies the remaining users in the room, updates user lists, and refreshes the active room list. This prevents stale data and ensures accurate room membership.
 
 
-8 Conclusion
+8. Conclusion
 
 The `index.js` file acts as the real-time backbone of the Chat Application. By combining Express for server hosting and Socket.IO for live communication, it enables dynamic chat rooms, instant messaging, and real-time user awareness with a clean and maintainable architecture.
 
 
-9 Output
+9. Output
+<img width="1920" height="1007" alt="Image" src="https://github.com/user-attachments/assets/0d68d9e6-d221-4e91-8699-677ccfd3a3ef" />
